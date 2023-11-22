@@ -21,7 +21,7 @@ export default function ListCard({
     <button
       disabled={disabled}
       className={` shadow-lg rounded-lg w-full mx-auto font-semibold ${
-        isDone ? "bg-gray-400 text-gray-500" : "bg-white "
+        isDone ? "bg-gray-500" : "bg-green-500 text-white"
       }`}
     >
       <div className="flex-1 p-6 space-y-4">

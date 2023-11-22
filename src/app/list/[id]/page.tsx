@@ -3,7 +3,7 @@
 import { api } from "@/services/api";
 import { Button, Spinner } from "@material-tailwind/react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IconButton, Checkbox } from "@material-tailwind/react";
 import { FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -62,7 +62,7 @@ export default function ListDetails() {
 
   const { id } = params;
 
-  const getProductsInList = async () => {
+  const getProductsInList = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await api.get(
@@ -75,7 +75,7 @@ export default function ListDetails() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
 
   const newProduct = async (data: NewProductProps) => {
     try {
@@ -126,7 +126,7 @@ export default function ListDetails() {
       toast.success("Lista concluída");
       setIsLoading(false);
       router.push("/lists");
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.message);
       setIsLoading(false);
     } finally {
@@ -137,7 +137,7 @@ export default function ListDetails() {
   useEffect(() => {
     getProductsInList();
     router.refresh();
-  }, []);
+  }, [getProductsInList, id, router]);
 
   return (
     <>
